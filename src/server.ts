@@ -65,7 +65,7 @@ export class Server {
                 let handler: Express.RequestHandler = async (req, res, next) => {
                     let functionName: string = serviceRoute.functionName
                     try {
-                        let result = await Promise.resolve(service[functionName](req))
+                        let result = await Promise.resolve(service[functionName](req, res, next))
                         if (!result) {
                             next()
                         }

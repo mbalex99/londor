@@ -20,7 +20,8 @@
     "test-watch": "mocha --opts tests/mocha.opts --watch",
     "clean": "rm -rf dist",
     "lint": "tslint -c tslint.json 'src/**/*.ts'",
-    "lint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix"
+    "lint-fix": "tslint -c tslint.json 'src/**/*.ts' --fix",
+    "prepublish": "npm run build"
   },
   "devDependencies": {
     "@types/body-parser": "^1.16.5",
@@ -40,6 +41,7 @@
   "dependencies": {
     "body-parser": "^1.17.2",
     "express": "^4.15.4",
-    "reflect-metadata": "^0.1.10"
+    "reflect-metadata": "^0.1.10",
+    "superagent": "^3.6.0"
   }
 }

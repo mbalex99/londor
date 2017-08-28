@@ -89,7 +89,19 @@ export function ServiceStatic(path: string, staticFilePath: string) {
     }
 }
 
+export function Body(target: any, key: string, index: number) {
+    
+}
 
+/**
+ * Populates by 
+ * @param target 
+ * @param key 
+ * @param index 
+ */
+export function Param(target: any, key: string, index: number) {
+    
+}
 
 @BaseRoute('/sample')
 class SampleService {
