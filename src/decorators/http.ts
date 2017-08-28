@@ -8,6 +8,11 @@ export interface ServiceRoute {
     functionName: string
 }
 
+export interface ServeStaticRoute {
+    path: string
+    staticFilePath: string
+}
+
 function ensureMetaData(target: any) {
     if (!Reflect.getMetadata('service:routes', target)) {
         Reflect.defineMetadata('service:routes', [], target)
@@ -83,6 +88,7 @@ export function ServiceStatic(path: string, staticFilePath: string) {
         Reflect.defineMetadata('service:servicestatic', { path: path, staticFilePath: staticFilePath }, target)
     }
 }
+
 
 
 @BaseRoute('/sample')
