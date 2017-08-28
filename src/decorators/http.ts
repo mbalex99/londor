@@ -72,13 +72,13 @@ export function Middleware() {
 
 }
 
-function BaseRoute(path: string) {
+export function BaseRoute(path: string) {
     return function (target: any): void {
         Reflect.defineMetadata('service:baseroute', path, target)
     }
 }
 
-function ServiceStatic(path: string, staticFilePath: string) {
+export function ServiceStatic(path: string, staticFilePath: string) {
     return function (target: any): void {
         Reflect.defineMetadata('service:servicestatic', { path: path, staticFilePath: staticFilePath }, target)
     }

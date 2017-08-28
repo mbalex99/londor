@@ -30,6 +30,20 @@ export class Server {
         this.services = []
     }
 
+    /**
+     * Use a middleware
+     * @param path 
+     * @param requestHandlers a single or several request handler
+     */
+    use(path: string | RegExp = null, ...requestHandlers: Express.RequestHandler[]) {
+        if (path) {
+            this.app.use(path, requestHandlers)
+        } else {
+            this.app.use(requestHandlers)
+        }
+    }
+
+
     addService(service: any) {
         this.services.push(service)
     }
@@ -47,8 +61,11 @@ export class Server {
             for (let serviceRoute of serviceRoutes) {
                 let handler: Express.RequestHandler = async (req, res, next) => {
                     let functionName: string = serviceRoute.functionName
-                    let result = await Promise.resolve(service[functionName](req))
-                    
+                    try {
+                        let result = await Promise.resolve(service[functionName](req))
+                    } catch (err) {
+
+                    }
                 }
                 (router[serviceRoute.httpMethod] as Express.IRouterMatcher<Express.Router>)(serviceRoute.path, handler)
             }
