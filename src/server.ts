@@ -1,6 +1,8 @@
 import * as http from 'http'
 import * as https from 'https'
 import * as Express from 'express'
+import { Response } from 'express'
+import * as bodyParser from 'body-parser'
 import { ServerOptions as SSLServerOptions } from 'https'
 import { ServiceRoute, HTTPMethod } from './decorators/http'
 
@@ -26,8 +28,11 @@ export class Server {
         if (!this.config.port) {
             this.config.port = 9080
         }
-        this.app = Express()
         this.services = []
+
+        this.app = Express()
+        this.app.use(bodyParser.json())
+        this.app.use(bodyParser.urlencoded({ extended: false }))
     }
 
     /**
@@ -68,8 +73,10 @@ export class Server {
                         let result = await Promise.resolve(service[functionName](req, res, next))
                         if (!result) {
                             next()
+                        } else {
+                            res.json(result)
                         }
-                        
+                        // if (result instanceof Express.)
                     } catch (err) {
 
                     }

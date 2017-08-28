@@ -18,6 +18,13 @@ describe('test sample service against http', function() {
                 ]
             }
         }
+
+        @Get('/middleware')
+        getViaMiddleware(req, res) {
+            res.json({
+                fromMiddleware: true
+            })
+        }
     }
 
     let server: Server
@@ -36,7 +43,22 @@ describe('test sample service against http', function() {
 
 
     it('should be able to get things', async () => {
-        superagent.get('/htp')
-    }) 
+        const url = `http://localhost:9080/sample/things`
+        const response = await superagent.get(url)
+        expect(response.body).to.deep.equal({
+            things: [
+                { name: 'yo', age: 12 },
+                { name: 'howdy', age: 45 }
+            ]
+        })
+    })
+
+    it('should be able to handle middleware responses', async () => {
+        const url = `http://localhost:9080/sample/middleware`
+        const response = await superagent.get(url)
+        expect(response.body).to.deep.equal({
+            fromMiddleware: true
+        })
+    })
 
 })

@@ -45,6 +45,12 @@
     "@types/express-serve-static-core" "*"
     "@types/mime" "*"
 
+"@types/superagent@^3.5.5":
+  version "3.5.5"
+  resolved "https://registry.yarnpkg.com/@types/superagent/-/superagent-3.5.5.tgz#f4378cec9105dce5f74979c8e4a1ff3fe18a5aca"
+  dependencies:
+    "@types/node" "*"
+
 accepts@~1.3.3:
   version "1.3.4"
   resolved "https://registry.yarnpkg.com/accepts/-/accepts-1.3.4.tgz#86246758c7dd6d21a6474ff084a4740ec05eb21f"
