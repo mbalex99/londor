@@ -2,6 +2,7 @@ import * as http from 'http'
 import * as https from 'https'
 import * as Express from 'express'
 import { ServerOptions as SSLServerOptions } from 'https'
+import { ServiceRoute, HTTPMethod } from './decorators/http'
 
 export interface ServerConfig {
     hostname?: string
@@ -27,12 +28,6 @@ export class Server {
         }
         this.app = Express()
         this.services = []
-
-        if (this.config.sslServerOptions) {
-            this.server = https.createServer(this.config.sslServerOptions, this.app)
-        } else {
-            this.server = http.createServer(this.app)
-        }
     }
 
     addService(service: any) {
@@ -40,6 +35,25 @@ export class Server {
     }
 
     async start(): Promise<void> {
+        if (this.config.sslServerOptions) {
+            this.server = https.createServer(this.config.sslServerOptions, this.app)
+        } else {
+            this.server = http.createServer(this.app)
+        }
+        for (let service of this.services) {
+            let router = Express.Router()
+            const baseRoute = Reflect.getMetadata('service:baseroute', service.constructor)
+            const serviceRoutes = Reflect.getMetadata('service:routes', service) as ServiceRoute[] || []
+            for (let serviceRoute of serviceRoutes) {
+                let handler: Express.RequestHandler = async (req, res, next) => {
+                    let functionName: string = serviceRoute.functionName
+                    let result = await Promise.resolve(service[functionName](req))
+                    
+                }
+                (router[serviceRoute.httpMethod] as Express.IRouterMatcher<Express.Router>)(serviceRoute.path, handler)
+            }
+            this.app.use(baseRoute, router)
+        }
         return new Promise<void>((resolve, reject) => {
             this.server.listen(this.config.port, this.config.hostname, this.config.backlog, (err) => {
                 if (err) {
@@ -52,7 +66,7 @@ export class Server {
     }
 
     async stop(): Promise<void> {
-        return new Promise<void>((resolve, reject) => {
+        await new Promise<void>((resolve, reject) => {
             this.server.close((err) => {
                 if (err) {
                     reject(err)
@@ -61,5 +75,7 @@ export class Server {
                 }
             })
         })
+        this.server = null
     }
+
 }
