@@ -39,42 +39,50 @@ export function Get(path: string) {
 export function Post(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'post', path, propertyKey)
     }
 }
 
 export function Put(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'put', path, propertyKey)
     }
 }
 
 export function Delete(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'delete', path, propertyKey)
     }
 }
 
 export function Options(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'options', path, propertyKey)
     }
 }
 
 export function Head(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'head', path, propertyKey)
     }
 }
 
 export function All(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
         ensureMetaData(target)
+        addPathAndMethod(target, 'all', path, propertyKey)
     }
 }
 
 
-export function Middleware() {
-
+export function MiddlewareBefore(...middlewares: any[]) {
+    return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
+        
+    }
 }
 
 export function BaseRoute(path: string) {
