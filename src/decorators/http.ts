@@ -102,7 +102,7 @@ export function Body(target: any, key: string, index: number) {
 }
 
 /**
- * Populates by 
+ * Populates with route params
  * @param target 
  * @param key 
  * @param index 

@@ -76,9 +76,8 @@ export class Server {
                         } else {
                             res.json(result)
                         }
-                        // if (result instanceof Express.)
                     } catch (err) {
-
+                        res.json(err)
                     }
                 }
                 (router[serviceRoute.httpMethod] as Express.IRouterMatcher<Express.Router>)(serviceRoute.path, handler)

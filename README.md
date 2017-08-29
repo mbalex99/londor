@@ -1,3 +1,21 @@
+
+# Londor - Tiny Service Based Web Framework
+
+```json
+{
+  "compilerOptions": {
+    "target": "es6",
+    "module": "commonjs",
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+  },
+  "exclude": [
+    "node_modules"
+  ]
+}
+```
+
+
 # Node Template Project - With TypeScript!
 
 At Realm we love TypeScript! We've seen great success in working across multiple remote teams with it and want to share our base template when creating projects. 
@@ -7,16 +25,6 @@ At Realm we love TypeScript! We've seen great success in working across multiple
 * Has Visual Studio Code Debugging!
 * Has Testing with Mocha + Chai
 * Has Gitignore
-
-# Get this Template!
-
-This is a great starting point for using Node.JS, TypeScript, and Visual Studio Code. All artifacts get created in the `dist` folder. All the sourcecode is in `src`
-
-Just clone this repo and point to your new origin!
-
-1. Run `git clone https://github.com/realm/node-template-project.git --depth 1`
-2. Run `git remote set-url origin https://github.com/USERNAME/REPOSITORY.git`
-3. Cd into the directory and run `npm install`
 
 # Commands for Building, Cleaning, Testing, Linting and Watching
 
