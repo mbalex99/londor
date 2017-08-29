@@ -7,10 +7,10 @@ Londor is a nice _little_ service based framework on top of express.
 1. You'll need Node 6.10.x or higher
 2. We highly recommmend using TypeScript 2.5.1 or higher
 3. Your tsconfig.json file will need:
-  a. to target `es6`
-  b. use `commonjs`
-  c. set `experimentalDecorators` to true
-  d. set `emitDecoratorMetadata` to true
+    - to target `es6`
+    - use `commonjs`
+    - set `experimentalDecorators` to true
+    - set `emitDecoratorMetadata` to true
 4. Run `npm install londor -S` 
 
 It should look something like below. 
@@ -49,7 +49,7 @@ server.start()
 
 ## Adding a service
 ```typescript
-import { Server, Get, Post, BaseRoute, Body } from 'londor'
+import { Server, Get, Post, Put, Delete, BaseRoute, Body } from 'londor'
 
 @BaseRoute('/cars')
 class CarService {
@@ -68,10 +68,26 @@ class CarService {
   }
 
   @Post('/')
-  async addNewCar(@Body body) {
+  async addNewCar(@Body body: any) {
     this.cars.push(body.car)
     return body
   }
+
+  @Put('/:carId')
+  async updateCar(@Body body: any) {
+    this.cars.push(body.car)
+    return body
+  }
+
+  @Delete('/:carId')
+  async deleteCar(@Param carId: string) {
+    for(let car of this.cars) {
+      if (car.carId === carId) {
+        this.cars.splice(this.cars.indexOf(car), 1)
+      }
+    }
+  }
+
 }
 const server = new Server({
   port: 4000
