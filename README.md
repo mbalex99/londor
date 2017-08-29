@@ -1,9 +1,11 @@
 
-# Londor - Tiny TypeScript Service Based Web Framework
+# Londor - Tiny and Neat Express 
+
 Londor is a nice _little_ service based framework on top of express. 
 It's 2 core values
 - Decrease Abstractions
 - Increase Readability 
+- It doesn't hide anything from express
 
 ## Getting Started
 
@@ -14,7 +16,7 @@ It's 2 core values
     - use `commonjs`
     - set `experimentalDecorators` to true
     - set `emitDecoratorMetadata` to true
-4. Run `npm install londor -S` 
+4. Run `npm install londor --save` 
 
 It should look something like below. 
 ```json
@@ -112,6 +114,7 @@ server.start()
 ```
 
 ## Using Express Middlewares
+
 The server can easily attach express middlewares. Simply use the familiar `use` functionality
 ```typescript
 import * as cors from 'cors'

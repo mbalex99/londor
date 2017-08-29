@@ -8,7 +8,7 @@ export interface ServiceRoute {
 
 export interface ServeStaticRoute {
     path: string
-    staticFilePath: string
+    staticRoot: string
 }
 
 function addPathAndMethod(target: any, httpMethod: HTTPMethod, path: string, method: string) {
@@ -104,7 +104,7 @@ export function Name(name: string) {
     }
 }
 
-export function ServeStatic(path: string, staticFilePath: string) {
+export function ServeStatic(route: string, staticRoot: string) {
     return function (target: any) {
         // save a reference to the original constructor
         let original = target;
@@ -113,8 +113,8 @@ export function ServeStatic(path: string, staticFilePath: string) {
             const instance = new original(...args)
             let staticRoutes: ServeStaticRoute[] = instance["staticRoutes"] || []
             staticRoutes.push({
-                path: path,
-                staticFilePath: staticFilePath
+                path: route,
+                staticRoot: staticRoot
             })
             instance["staticRoutes"] = staticRoutes
             return instance
@@ -165,6 +165,4 @@ class SampleService {
 }
 
 const service = new SampleService("oh", "my")
-console.log(Reflect.getMetadata('service:routes', service))
-console.log(Reflect.getMetadata('service:baseroute', service.constructor))
-console.log(service);
+console.log(service["routes"]);

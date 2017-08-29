@@ -4,7 +4,7 @@ import * as Express from 'express'
 import { Response } from 'express'
 import * as bodyParser from 'body-parser'
 import { ServerOptions as SSLServerOptions } from 'https'
-import { ServiceRoute, HTTPMethod } from './decorators'
+import { ServiceRoute, HTTPMethod, ServeStaticRoute } from './decorators'
 
 export interface ServerConfig {
     hostname?: string
@@ -35,19 +35,9 @@ export class Server {
         this.app.use(bodyParser.urlencoded({ extended: false }))
     }
 
-    /**
-     * Use a middleware
-     * @param path 
-     * @param requestHandlers a single or several request handler
-     */
-    use(path: string | RegExp = null, ...requestHandlers: Express.RequestHandler[]) {
-        if (path) {
-            this.app.use(path, requestHandlers)
-        } else {
-            this.app.use(requestHandlers)
-        }
+    use(...args) {
+        this.app.use(...args)
     }
-
 
     addService(service: any) {
         this.services.push(service)
@@ -65,6 +55,12 @@ export class Server {
             if (!baseRoute) {
                 throw new Error("This service needs a base route.")
             }
+
+            const staticRoutes: ServeStaticRoute[] = service["staticRoutes"] || []
+            for (let staticRoute of staticRoutes) {
+                router.use(staticRoute.path, Express.static(staticRoute.staticRoot))
+            }
+            
             const serviceRoutes = service["routes"] as ServiceRoute[] || []
             for (let serviceRoute of serviceRoutes) {
                 let handler: Express.RequestHandler = async (req, res, next) => {
