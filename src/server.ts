@@ -4,7 +4,7 @@ import * as Express from 'express'
 import { Response } from 'express'
 import * as bodyParser from 'body-parser'
 import { ServerOptions as SSLServerOptions } from 'https'
-import { ServiceRoute, HTTPMethod } from './decorators/http'
+import { ServiceRoute, HTTPMethod } from './decorators'
 
 export interface ServerConfig {
     hostname?: string

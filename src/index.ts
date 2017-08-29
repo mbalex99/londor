@@ -1,2 +1,2 @@
-export * from './decorators/http'
+export * from './decorators'
 export { Server, ServerConfig } from './server'
