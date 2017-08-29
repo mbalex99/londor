@@ -61,19 +61,17 @@ export class Server {
         }
         for (let service of this.services) {
             let router = Express.Router()
-            const baseRoute = Reflect.getMetadata('service:baseroute', service.constructor)
+            const baseRoute: string = service["baseRoute"] || service.constructor.name.toLowerCase()
             if (!baseRoute) {
                 throw new Error("This service needs a base route.")
             }
-            const serviceRoutes = Reflect.getMetadata('service:routes', service) as ServiceRoute[] || []
+            const serviceRoutes = service["routes"] as ServiceRoute[] || []
             for (let serviceRoute of serviceRoutes) {
                 let handler: Express.RequestHandler = async (req, res, next) => {
                     let functionName: string = serviceRoute.functionName
                     try {
                         let result = await Promise.resolve(service[functionName](req, res, next))
-                        if (!result) {
-                            next()
-                        } else {
+                        if (result) {
                             res.json(result)
                         }
                     } catch (err) {

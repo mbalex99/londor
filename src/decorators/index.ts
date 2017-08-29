@@ -1,5 +1,3 @@
-import 'reflect-metadata'
-
 export type HTTPMethod = 'all' | 'get' | 'put' | 'post' | 'delete' | 'head' | 'options' | 'trace' | 'patch'
 
 export interface ServiceRoute {
@@ -13,67 +11,54 @@ export interface ServeStaticRoute {
     staticFilePath: string
 }
 
-function ensureMetaData(target: any) {
-    if (!Reflect.getMetadata('service:routes', target)) {
-        Reflect.defineMetadata('service:routes', [], target)
-    }
-}
-
 function addPathAndMethod(target: any, httpMethod: HTTPMethod, path: string, method: string) {
-    let routes = Reflect.getMetadata('service:routes', target) as ServiceRoute[]
+    let routes: ServiceRoute[] = target["routes"] || []
     routes.push({
         httpMethod: httpMethod,
         path: path,
         functionName: method
     })
-    Reflect.defineMetadata('service:routes', routes, target)
+    target["routes"] = routes
 }
 
 export function Get(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'get', path, propertyKey)
     }
 }
 
 export function Post(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'post', path, propertyKey)
     }
 }
 
 export function Put(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'put', path, propertyKey)
     }
 }
 
 export function Delete(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'delete', path, propertyKey)
     }
 }
 
 export function Options(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'options', path, propertyKey)
     }
 }
 
 export function Head(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'head', path, propertyKey)
     }
 }
 
 export function All(path: string) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        ensureMetaData(target)
         addPathAndMethod(target, 'all', path, propertyKey)
     }
 }
@@ -81,36 +66,63 @@ export function All(path: string) {
 
 export function MiddlewareBefore(...middlewares: any[]) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-
+        throw new Error('Not yet implemented')
     }
 }
 
 export function BaseRoute(path: string) {
-    return function (target: any): void {
-        Reflect.defineMetadata('service:baseroute', path, target)
-    }
-}
-
-export function Name(name: string) {
-    return function logClass(target: any) {
+    return function (target: any) {
         // save a reference to the original constructor
         let original = target;
-        // the new constructor behaviour
+        // the new constructor behavior
         let f: any = function (...args) {
-          const instance = new original(...args)
-          instance["name"] = name
-          return instance
+            const instance = new original(...args)
+            instance["baseRoute"] = path
+            return instance
         }
         // copy prototype so intanceof operator still works
         f.prototype = original.prototype;
         // return new constructor (will override original)
         return f;
-      }
+    }
+}
+
+export function Name(name: string) {
+    return function (target: any) {
+        // save a reference to the original constructor
+        let original = target;
+        // the new constructor behavior
+        let f: any = function (...args) {
+            const instance = new original(...args)
+            instance["name"] = name
+            return instance
+        }
+        // copy prototype so intanceof operator still works
+        f.prototype = original.prototype;
+        // return new constructor (will override original)
+        return f;
+    }
 }
 
 export function ServeStatic(path: string, staticFilePath: string) {
-    return function (target: any): void {
-        Reflect.defineMetadata('service:servicestatic', { path: path, staticFilePath: staticFilePath }, target)
+    return function (target: any) {
+        // save a reference to the original constructor
+        let original = target;
+        // the new constructor behavior
+        let f: any = function (...args) {
+            const instance = new original(...args)
+            let staticRoutes: ServeStaticRoute[] = instance["staticRoutes"] || []
+            staticRoutes.push({
+                path: path,
+                staticFilePath: staticFilePath
+            })
+            instance["staticRoutes"] = staticRoutes
+            return instance
+        }
+        // copy prototype so intanceof operator still works
+        f.prototype = original.prototype;
+        // return new constructor (will override original)
+        return f;
     }
 }
 
