@@ -1,6 +1,6 @@
 {
   "name": "londor",
-  "version": "1.0.0-alpha.1",
+  "version": "1.0.0",
   "description": "A tiny typescript and express based web framework",
   "license": "MIT",
   "repository": "https://github.com/mbalex99/londor",

@@ -11,6 +11,7 @@ Londor is a nice _little_ service based framework on top of express.
   b. use `commonjs`
   c. set `experimentalDecorators` to true
   d. set `emitDecoratorMetadata` to true
+4. Run `npm install londor -S` 
 
 It should look something like below. 
 ```json
@@ -27,6 +28,25 @@ It should look something like below.
 }
 ```
 
+# Examples
+
+## A simple server
+```typescript
+import { Server } from 'londor'
+
+const server = new Server({
+  port: 4000
+})
+
+server.start()
+  .then(() => {
+    console.log("The server is started on port 4000!")
+  })
+  .catch((err) => {
+    console.error(err)
+  })
+
+```
 
 # Commands for Building, Cleaning, Testing, Linting and Watching
 
