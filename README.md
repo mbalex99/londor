@@ -51,7 +51,7 @@ server.start()
 A service is just a `class` that you can add to a `Server` instance.
 - You can expose methods as http endpoints using `@Get, @Post, @Put, @Delete` etc...
 - You can read parameters using the `@Param('carId')` or just `@Param` decorator
-
+- Services don't need http endpoints at all
 ```typescript
 import { Server, Get, Post, Put, Delete, BaseRoute, Body } from 'londor'
 
@@ -108,8 +108,6 @@ server.start()
   })
 ```
 
-
-
 ## Using Express Middlewares
 The server can easily attach express middlewares. Simply use the familiar `use` functionality
 ```typescript
@@ -117,7 +115,17 @@ import * as cors from 'cors'
 server.use(cors())
 ```
 
+### Express Middlewares in Services
+You can add additional middlewares before 
+
+```typescript
+import { Get, UseMiddleware } from 'londor'
+```
+
 ## Serving Static Files
+
+Serving Static Files is super easy with `@ServeStatic`
+
 ```typescript
 import { ServeStatic, BaseRoute } from 'londor'
 @BaseRoute('/dashboard')
