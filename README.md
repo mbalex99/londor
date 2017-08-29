@@ -68,15 +68,16 @@ class CarService {
   }
 
   @Post('/')
-  addNewCar(@Body body) {
+  async addNewCar(@Body body) {
     this.cars.push(body.car)
+    return body
   }
 }
-
-
 const server = new Server({
   port: 4000
 })
+
+server.addService(new CarService())
 
 server.start()
   .then(() => {
@@ -87,7 +88,15 @@ server.start()
   })
 ```
 
-# Commands for Building, Cleaning, Testing, Linting and Watching
+## Using Express Middlewares
+
+```typescript
+import * as cors from 'cors'
+
+server.use(cors())
+```
+
+# Contributing
 
 After `npm install`
 
