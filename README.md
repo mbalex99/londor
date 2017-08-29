@@ -125,6 +125,10 @@ import { Get, UseMiddleware } from 'londor'
 ## Serving Static Files
 
 Serving Static Files is super easy with `@ServeStatic`
+- The first parameter is the route of the static file
+- The second parameter is the path to file to serve. 
+
+This is simply a wrapper around `express.static` API
 
 ```typescript
 import { ServeStatic, BaseRoute } from 'londor'
