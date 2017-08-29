@@ -1,6 +1,9 @@
 
 # Londor - Tiny TypeScript Service Based Web Framework
 Londor is a nice _little_ service based framework on top of express. 
+It's 2 core values
+- Decrease Abstractions
+- Increase Readability 
 
 ## Getting Started
 
@@ -160,7 +163,7 @@ After `npm install`
 4. To Lint `npm run lint`
 5. To Buld and Watch when you make changes `npm run watch`
 
-# Debugging with Visual Studio Code
+## Debugging with Visual Studio Code
 
 1. Set a breakpoint in your code ending in `.ts` or your test ending in `.spec.ts`
 2. Run Either `Launch Program` or `Launch Tests` in the debug pane. 
