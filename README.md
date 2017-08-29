@@ -136,6 +136,7 @@ Serving Static Files is super easy with `@ServeStatic`
 
 This is simply a wrapper around `express.static` API
 
+
 ```typescript
 import { ServeStatic, BaseRoute } from 'londor'
 @BaseRoute('/dashboard')
@@ -171,3 +172,6 @@ After `npm install`
 1. Set a breakpoint in your code ending in `.ts` or your test ending in `.spec.ts`
 2. Run Either `Launch Program` or `Launch Tests` in the debug pane. 
 3. Run Either `Launch Program` or `Launch Tests` in the debug pane. 
+
+## Notes
+Londor is a fictional place from Dark Souls 3. It's the land of hollows. I didn't want to create an express framework with a lot of magic inside. So I created something pretty close to empty.
