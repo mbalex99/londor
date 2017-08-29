@@ -1,12 +1,13 @@
 {
-  "name": "node-template-project",
-  "version": "0.0.1",
-  "description": "node-template-project",
+  "name": "londor",
+  "version": "1.0.0-alpha.1",
+  "description": "A tiny typescript and express based web framework",
   "license": "MIT",
-  "repository": "",
-  "author": "",
+  "repository": "https://github.com/mbalex99/londor",
+  "author": "Maximilian Alexander",
   "keywords": [
-    ""
+    "Web", "Framework", "Express",
+    "TypeScript"
   ],
   "files": [
     "dist"
