@@ -45,7 +45,46 @@ server.start()
   .catch((err) => {
     console.error(err)
   })
+```
 
+## Adding a service
+```typescript
+import { Server, Get, Post, BaseRoute, Body } from 'londor'
+
+@BaseRoute('/cars')
+class CarService {
+
+  cars = [{
+      carId: 1,
+      name: 'toyota',
+    }, {
+      carId: 2,
+      name: 'ford',
+    }]
+
+  @Get('/all')
+  getAllCars(){
+    return this.cars
+  }
+
+  @Post('/')
+  addNewCar(@Body body) {
+    this.cars.push(body.car)
+  }
+}
+
+
+const server = new Server({
+  port: 4000
+})
+
+server.start()
+  .then(() => {
+    console.log("The server is started on port 4000!")
+  })
+  .catch((err) => {
+    console.error(err)
+  })
 ```
 
 # Commands for Building, Cleaning, Testing, Linting and Watching
