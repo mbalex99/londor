@@ -81,7 +81,7 @@ export function All(path: string) {
 
 export function MiddlewareBefore(...middlewares: any[]) {
     return function (target: any, propertyKey: string, descriptor: PropertyDescriptor) {
-        
+
     }
 }
 
@@ -91,14 +91,14 @@ export function BaseRoute(path: string) {
     }
 }
 
-export function ServiceStatic(path: string, staticFilePath: string) {
+export function ServeStatic(path: string, staticFilePath: string) {
     return function (target: any): void {
         Reflect.defineMetadata('service:servicestatic', { path: path, staticFilePath: staticFilePath }, target)
     }
 }
 
 export function Body(target: any, key: string, index: number) {
-    
+
 }
 
 /**
@@ -108,7 +108,7 @@ export function Body(target: any, key: string, index: number) {
  * @param index 
  */
 export function Param(target: any, key: string, index: number) {
-    
+
 }
 
 @BaseRoute('/sample')
@@ -117,8 +117,8 @@ class SampleService {
     @Get('/')
     getUsers() {
         return new Promise<string>((resolve, reject) => {
-            setTimeout(function() {
-                resolve('oooh')    
+            setTimeout(function () {
+                resolve('oooh')
             }, 2000);
         })
     }

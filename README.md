@@ -48,6 +48,10 @@ server.start()
 ```
 
 ## Adding a service
+A service is just a `class` that you can add to a `Server` instance.
+- You can expose methods as http endpoints using `@Get, @Post, @Put, @Delete` etc...
+- You can read parameters using the `@Param('carId')` or just `@Param` decorator
+
 ```typescript
 import { Server, Get, Post, Put, Delete, BaseRoute, Body } from 'londor'
 
@@ -104,12 +108,34 @@ server.start()
   })
 ```
 
-## Using Express Middlewares
 
+
+## Using Express Middlewares
+The server can easily attach express middlewares. Simply use the familiar `use` functionality
 ```typescript
 import * as cors from 'cors'
-
 server.use(cors())
+```
+
+## Serving Static Files
+```typescript
+import { ServeStatic, BaseRoute } from 'londor'
+@BaseRoute('/dashboard')
+@ServeStatic('/', 'path/to/index.html') 
+@ServeStatic('/admin', 'path/to/admin.html') 
+class DashboardService {
+  // .. more implementation goes here
+}
+server.addService(new DashboardService())
+server.start()
+  .then(() => {
+    console.log("The server is started on port 4000!")
+    console.log("The dashboard is at http://localhost:4000/dashboard")
+    console.log("The admin panel is at http://localhost:4000/dashboard/admin")
+  })
+  .catch((err) => {
+    console.error(err)
+  })
 ```
 
 # Contributing
